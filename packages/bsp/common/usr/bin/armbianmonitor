@@ -82,7 +82,7 @@
 ############################################################################
 
 # Config:
-declare -a paste_servers=("paste.armbian.com" "paste.next.armbian.com")
+declare -a paste_servers=("paste.armbian.com" "paste.next.armbian.com" "paste.armbian.de")
 if [[ "${PASTE_SERVER_HOST}" != "" ]]; then
 	echo "Using custom paste server: '${PASTE_SERVER_HOST}'"
 	paste_servers=("${PASTE_SERVER_HOST}" "${paste_servers[@]}")
@@ -179,7 +179,7 @@ ParseOptions() {
 						# in clear since otherwise the log becomes worthless due to randomly generated
 						# addresses here and there that might conflict
 						sed -E 's/([0-9]{1,3}\.)([0-9]{1,3}\.)([0-9]{1,3}\.)([0-9]{1,3})/XXX.XXX.\3\4/g' |
-						curl -s --data-binary @- "https://${paste_server}/log"
+						curl -s --fail --data-binary @- "https://${paste_server}/log"
 					# Check PIPESTATUS to know if everything worked. Any non-zero exit status means something didn't work.
 					for i in "${PIPESTATUS[@]}"; do
 						counter=$((counter + 1))
